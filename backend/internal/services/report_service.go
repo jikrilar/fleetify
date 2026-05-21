@@ -134,7 +134,7 @@ func (s *ReportService) ApproveReport(id uint) (*ReportResponse, error) {
 		if err := tx.First(&report, id).Error; err != nil {
 			return err
 		}
-		if report.Status != models.StatusPendingApproval {
+		if !canApprove(report.Status) {
 			return errors.New("hanya laporan PENDING_APPROVAL yang bisa disetujui")
 		}
 		report.Status = models.StatusApproved
@@ -165,7 +165,7 @@ func (s *ReportService) CompleteReport(id uint, req CompleteReportRequest) (*Rep
 		if err := tx.First(&report, id).Error; err != nil {
 			return err
 		}
-		if report.Status != models.StatusApproved {
+		if !canComplete(report.Status) {
 			return errors.New("hanya laporan APPROVED yang bisa diselesaikan")
 		}
 		report.Status = models.StatusCompleted

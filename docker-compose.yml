@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: ./backend
+    container_name: fleetify_app
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    environment:
+      APP_PORT: ${APP_PORT:-8080}
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-fleetify}
+      DB_PASSWORD: ${DB_PASSWORD:-fleetify_password}
+      DB_NAME: ${DB_NAME:-fleetify_db}
+      WEBHOOK_URL: ${WEBHOOK_URL:-}
+      UPLOAD_DIR: ${UPLOAD_DIR:-uploads}
+    volumes:
+      - ./frontend:/app/frontend:ro
+      - ./backend/uploads:/app/uploads
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: fleetify_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${DB_NAME:-fleetify_db}
+      MYSQL_USER: ${DB_USER:-fleetify}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-fleetify_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql_data:

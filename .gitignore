@@ -1,0 +1,9 @@
+.env
+backend/uploads/*
+!backend/uploads/.gitkeep
+*.exe
+*.test
+tmp/
+dist/
+node_modules/
+.DS_Store

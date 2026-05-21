@@ -1,0 +1,88 @@
+:root {
+  --surface: #ffffff;
+  --line: #d9dee7;
+  --page: #f5f7fa;
+  --ink: #1f2937;
+}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+}
+
+.navbar-brand {
+  color: #0f766e;
+}
+
+.nav-link {
+  border: 0;
+  background: transparent;
+}
+
+.nav-link.active {
+  color: #0f766e !important;
+  font-weight: 600;
+}
+
+.user-select {
+  min-width: 210px;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.panel-header {
+  margin-bottom: 16px;
+}
+
+.panel-header h1,
+.panel-header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.section-title {
+  font-size: 1rem;
+}
+
+.item-row {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.workflow-list {
+  margin-bottom: 0;
+}
+
+.empty-state {
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: #667085;
+}
+
+.photo-pill {
+  display: inline-block;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+@media (max-width: 576px) {
+  .panel {
+    padding: 16px;
+  }
+
+  .panel-header {
+    align-items: flex-start !important;
+    flex-direction: column;
+  }
+}

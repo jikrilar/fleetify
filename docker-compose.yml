@@ -14,6 +14,7 @@ services:
       DB_NAME: ${DB_NAME:-fleetify_db}
       WEBHOOK_URL: ${WEBHOOK_URL:-}
       UPLOAD_DIR: ${UPLOAD_DIR:-uploads}
+      FRONTEND_DIR: /app/frontend
     volumes:
       - ./frontend:/app/frontend:ro
       - ./backend/uploads:/app/uploads

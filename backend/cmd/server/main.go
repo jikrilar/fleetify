@@ -2,22 +2,22 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/gofiber/fiber/v3"
+	"github.com/jikrilar/fleetify/backend/internal/config"
+	"github.com/jikrilar/fleetify/backend/internal/database"
+	"github.com/jikrilar/fleetify/backend/internal/routes"
 )
 
 func main() {
-	app := fiber.New()
-
-	app.Get("/health", func(c fiber.Ctx) error {
-		return c.JSON(fiber.Map{"status": "ok"})
-	})
-
-	port := os.Getenv("APP_PORT")
-	if port == "" {
-		port = "8080"
+	cfg := config.Load()
+	db, err := database.Connect(cfg)
+	if err != nil {
+		log.Fatalf("gagal konek database: %v", err)
 	}
 
-	log.Fatal(app.Listen(":" + port))
+	app := fiber.New()
+	routes.Register(app, db, cfg.WebhookURL)
+
+	log.Fatal(app.Listen(":" + cfg.AppPort))
 }
